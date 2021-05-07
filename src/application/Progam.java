@@ -52,7 +52,7 @@ public class Progam {
 			 
 			 
 			 
-			sc.close();
+			sc.close();//teste
 			
 		}
 		
