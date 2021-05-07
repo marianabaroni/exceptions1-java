@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import model.execeptions.DomainException;
+
 public class Reservation {
 
 	private Integer roomNumber;
@@ -15,7 +17,12 @@ public class Reservation {
 		
 	}
 
-	public Reservation(Integer roomNumber, Date checkin, Date checkout) {
+	public Reservation(Integer roomNumber, Date checkin, Date checkout)  {//propagar a execeção no método
+		if(!checkOut.after(checkIn)) {
+			 throw new DomainException("Error in reservation: check-Out date must be after check-In date");
+		 }	
+		
+		
 		this.roomNumber = roomNumber;
 		this.checkIn = checkin;
 		this.checkOut = checkout;
@@ -42,16 +49,16 @@ public class Reservation {
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);//converte o diff que está em miliseconds para dias.
 	}
 	
-	public String updateDates(Date checkIn, Date checkOut) {
+	public void updateDates(Date checkIn, Date checkOut){
 		Date now = new Date();
 		 if(checkIn.before(now) || checkOut.before(now)) {
-			return "Error in reservation: check-Out date must be future dates";
+			throw new DomainException( "Error in reservation: check-Out date must be future dates");
 		 }if(!checkOut.after(checkIn)) {
-			 return "Error in reservation: check-Out date must be after check-In date";
+			 throw new DomainException("Error in reservation: check-Out date must be after check-In date");
 		 }		
 		this.checkIn = checkIn;// o checini do objeto receber o checkin que veio como argumento do metodo
 		this.checkOut = checkOut;
-		return null;//para indicar que não teve nenhum erro. Se deu algum erro, ele retorna a string do Return acima
+		//para indicar que não teve nenhum erro. Se deu algum erro, ele retorna a string do Return acima
 	}
 
 	@Override
