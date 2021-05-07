@@ -50,7 +50,7 @@ public class Progam {
 				 System.out.println("Reservation: " + reservation);
 			 }
 			 
-			 
+			 System.out.println();
 			 
 			sc.close();//teste
 			
